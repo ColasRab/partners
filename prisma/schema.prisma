@@ -1,0 +1,16 @@
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Partner {
+  id   Int    @id @default(autoincrement())
+  name String
+  logo Bytes
+  // Add other fields as needed
+}
