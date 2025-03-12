@@ -5,10 +5,6 @@ import { motion } from "framer-motion"
 import { FrameComponent } from "./FrameComponent"
 import { Slider } from "@/components/ui/slider"
 import { Button } from "@/components/ui/button"
-import { Switch } from "@/components/ui/switch"
-
-const GRID_SIZE = 12
-const CELL_SIZE = 60 // pixels per grid cell
 
 interface Frame {
   id: number
@@ -151,8 +147,6 @@ export default function DynamicFrameLayout() {
   const [gapSize, setGapSize] = useState(4)
   const [showControls, setShowControls] = useState(false)
   const [cleanInterface, setCleanInterface] = useState(true)
-  const [showFrames, setShowFrames] = useState(false) // Update: showFrames starts as false
-  const [autoplayMode, setAutoplayMode] = useState<"all" | "hover">("all")
 
   const getRowSizes = () => {
     if (hovered === null) {
@@ -204,26 +198,6 @@ export default function DynamicFrameLayout() {
 
   return (
     <div className="space-y-4 w-full h-full">
-      <div className="flex justify-between items-center mb-4">
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center space-x-2">
-            <Switch id="frame-toggle" checked={showFrames} onCheckedChange={setShowFrames} />
-            <label htmlFor="frame-toggle" className="text-sm text-white/70">
-              {showFrames ? "Hide Frames" : "Show Frames"}
-            </label>
-          </div>
-          <div className="flex items-center space-x-2">
-            <Switch
-              id="autoplay-toggle"
-              checked={autoplayMode === "all"}
-              onCheckedChange={(checked) => setAutoplayMode(checked ? "all" : "hover")}
-            />
-            <label htmlFor="autoplay-toggle" className="text-sm text-white/70">
-              {autoplayMode === "all" ? "Autoplay All" : "Hover Autoplay"}
-            </label>
-          </div>
-        </div>
-      </div>
       {!cleanInterface && (
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold text-white">Dynamic Frame Layout</h2>
@@ -306,8 +280,6 @@ export default function DynamicFrameLayout() {
                 onBorderSizeChange={(value) => updateFrameProperty(frame.id, "borderSize", value)}
                 showControls={showControls && !cleanInterface}
                 label={`Frame ${frame.id}`}
-                showFrame={showFrames}
-                autoplayMode={autoplayMode}
                 isHovered={
                   hovered?.row === Math.floor(frame.defaultPos.y / 4) &&
                   hovered?.col === Math.floor(frame.defaultPos.x / 4)

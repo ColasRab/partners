@@ -4,8 +4,7 @@
 
 @font-face {
   font-family: "PPEditorialNew-UltralightItalic";
-  src: url("https://raw.githubusercontent.com/oeneco/file-thing/9f9223f211387b3764942fcff87f57523870916d/PPEditorialNew-UltralightItalic.ttf")
-    format("truetype");
+  src: url("https://raw.githubusercontent.com/oeneco/file-thing/9f9223f211387b3764942fcff87f57523870916d/PPEditorialNew-UltralightItalic.ttf") format("truetype");
   font-weight: 200;
   font-style: italic;
   font-display: swap;
@@ -41,4 +40,3 @@
     opacity: 0.6;
   }
 }
-

@@ -1,6 +1,6 @@
 "use client"
 import { Slider } from "@/components/ui/slider"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 
 interface FrameComponentProps {
   video: string
@@ -18,8 +18,6 @@ interface FrameComponentProps {
   onBorderSizeChange: (value: number) => void
   showControls: boolean
   label: string
-  showFrame: boolean
-  autoplayMode: "all" | "hover"
   isHovered: boolean
 }
 
@@ -39,23 +37,9 @@ export function FrameComponent({
   onBorderSizeChange,
   showControls,
   label,
-  showFrame,
-  autoplayMode,
   isHovered,
 }: FrameComponentProps) {
   const videoRef = useRef<HTMLVideoElement>(null)
-
-  useEffect(() => {
-    if (autoplayMode === "all") {
-      videoRef.current?.play()
-    } else if (autoplayMode === "hover") {
-      if (isHovered) {
-        videoRef.current?.play()
-      } else {
-        videoRef.current?.pause()
-      }
-    }
-  }, [isHovered, autoplayMode])
 
   return (
     <div
@@ -73,17 +57,12 @@ export function FrameComponent({
           style={{
             zIndex: 1,
             transition: "all 0.3s ease-in-out",
-            padding: showFrame ? `${borderThickness}px` : "0",
-            width: showFrame ? `${borderSize}%` : "100%",
-            height: showFrame ? `${borderSize}%` : "100%",
-            left: showFrame ? `${(100 - borderSize) / 2}%` : "0",
-            top: showFrame ? `${(100 - borderSize) / 2}%` : "0",
           }}
         >
           <div
             className="w-full h-full overflow-hidden"
             style={{
-              transform: `scale(${mediaSize})`,
+              transform: `scale(${isHovered ? mediaSize * 1.2 : mediaSize})`,
               transformOrigin: "center",
               transition: "transform 0.3s ease-in-out",
             }}
@@ -94,24 +73,13 @@ export function FrameComponent({
               loop
               muted
               playsInline
-              autoPlay={autoplayMode === "all" || (autoplayMode === "hover" && isHovered)}
               ref={videoRef}
-              onMouseEnter={(e) => {
-                if (autoplayMode === "hover") {
-                  e.currentTarget.play()
-                }
-              }}
-              onMouseLeave={(e) => {
-                if (autoplayMode === "hover") {
-                  e.currentTarget.pause()
-                }
-              }}
             />
           </div>
         </div>
 
         {/* Frame Elements (Higher z-index) */}
-        {showFrame && (
+        {(
           <div className="absolute inset-0" style={{ zIndex: 2 }}>
             {/* Corners */}
             <div
